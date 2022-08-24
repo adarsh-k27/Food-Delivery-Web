@@ -2,10 +2,11 @@ import React from 'react'
 import Logo from '../../assets/food-delivery-logo.jpg'
 import user from '../../assets/user.png'
 import { FaShoppingCart } from 'react-icons/fa'
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 function Header () {
   return (
-    <header className='fixed w-screen z-50 p-6 px-12 '>
+    <div>
+    <header className='fixed w-screen z-50 p-3 px-12'>
       {/* We Want to Create Two Type Of Header */}
       {/* One For Large screen  */}
       <div className='hidden md:flex w-full items-center '>
@@ -35,7 +36,12 @@ function Header () {
             <FaShoppingCart className='text-xl' />
           </div>
           <div className='flex'>
-            <motion.img whileTap={{ scale: 1.1 }} src={user} className="w-10 min-w-10 h-10 min-h-10 " alt='user profile' />
+            <motion.img
+              whileTap={{ scale: 1.1 }}
+              src={user}
+              className='w-10 min-w-10 h-10 min-h-10 '
+              alt='user profile'
+            />
           </div>
         </div>
       </div>
@@ -43,6 +49,7 @@ function Header () {
       {/* other for small screen mobiles */}
       <div className='flex md:hidden w-full bg-green-400 px-4'>header</div>
     </header>
+    </div>
   )
 }
 
