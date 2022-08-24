@@ -1,9 +1,9 @@
 import React from "react";
-
+import {Header} from './components/index'
 function App() {
   return (
-    <div className="h-screen flex items-center justify-center text-blue-600">
-      app
+    <div className="w-screen h-auto flex flex-col">
+      <Header />
     </div>
   );
 }
