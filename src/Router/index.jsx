@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import {CreateContainer, MainContainer} from '../components'
+import {CreateContainer, MainContainer,CreateCatogery} from '../components'
 function RouterWrapper() {
   return (
     <BrowserRouter>
     <Routes>
-        <Route path='/' element={ <CreateContainer/> }>
+        <Route path='/' element={ <CreateCatogery/> }>
         </Route>
     </Routes>
     </BrowserRouter>

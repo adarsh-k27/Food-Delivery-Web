@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import { MdFoodBank } from 'react-icons/md'
 import { BsFillCloudArrowUpFill } from 'react-icons/bs'
 import { AiFillDollarCircle } from 'react-icons/ai'
@@ -7,8 +8,12 @@ import { Catogeries } from '../../datas'
 import { Loader } from '../../components'
 import { useRef } from 'react'
 import food from '../../assets/chicken.png'
+import { UserSignIn } from '../../collections/user'
+import { useContext } from 'react'
+import GlobalContext from '../../context/globalcontext'
 function CreateContainer () {
   const [Title, setTitle] = useState('')
+  const Navigate=useNavigate()
   const [Catogery, setCatogery] = useState('')
   const [Calory, setCalory] = useState('')
   const [Price, setPrice] = useState('')
@@ -17,11 +22,19 @@ function CreateContainer () {
   const [found, setFound] = useState('sm')
   const [field, setField] = useState(false)
   const [Load, setLoad] = useState(false)
+  const {user}=useContext(GlobalContext).state
   const imageUpload = useRef()
   const UploadImage = () => {
     //cloudify Upload
-    
+
   }
+
+  useEffect(()=>{
+    if(!user.admin){
+      Navigate('/')
+    }
+  },[user])
+
   return (
     <div className='flex justify-center items-center px-3 md:px-20 bg-gray-200'>
       <div className='w-full  p-2 px-4 mad:px-12 flex flex-col gap-3 items-center justify-center'>
