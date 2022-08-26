@@ -1,3 +1,5 @@
 export {default as Header } from './header/header'
 export {default as MainContainer} from './MainComponent'
 export {default as CreateContainer} from './createContainer'
+export {default as Home} from './HOME'
+export {default as Loader} from './loader'

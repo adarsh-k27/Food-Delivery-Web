@@ -1,39 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Logo from '../../assets/food-delivery-logo.jpg'
-import user from '../../assets/user.png'
+import userImg from '../../assets/user.png'
 import { FaShoppingCart } from 'react-icons/fa'
+import { AiOutlineLogout, AiOutlinePlus } from 'react-icons/ai'
 import { motion } from 'framer-motion'
-import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
-import jwt from 'jwt-decode'
-
+import { Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react'
+import { UserSignIn } from '../../collections/user'
+import { UseGlobalContext } from '../../context/contextprovider'
+import GlobalContext from '../../context/globalcontext'
 function Header () {
   const [open, setOpen] = useState(false)
-  const GoogleLoginFail = res => {
-    
+  const [small, setSmall] = useState(false)
+  const [Loading, setLoading] = useState(false)
+  const { authentication, user } = useContext(GlobalContext).state
+  const { UserLogin, userLogOut } = useContext(GlobalContext)
+  const [UserDetails, setUserDetails] = useState(null)
+
+  console.log('auth', authentication)
+  
+  
+
+  const Logout = () => {
+    localStorage.clear()
+    userLogOut()
+    window.location.reload()
   }
-
-  useEffect(() => {
-  window.google.accounts.id.initialize({
-    client_id:
-      '134749209819-gsrbf6jdigucts70297t5990tnhuh3pu.apps.googleusercontent.com',
-    callback: GoogleLoginSuccess
-  })
-  window.google.accounts.id.renderButton(document.getElementById('SignInDiv'), {
-    theme: 'outline',
-    size: 'large'
-  })
-}, [window])
-const GoogleLoginSuccess = response => {
-const userObj = jwt(response.credential)
-console.log(userObj)
-
-}
-
-
-
   return (
     <div>
-      <header className='fixed w-screen z-50 p-3 px-1  md:px-12 md:p-4 bg-header'>
+      <header className='fixed w-screen z-50 p-3 px-1  md:px-12 md:p-2 bg-header'>
         {/* We Want to Create Two Type Of Header */}
         {/* One For Large screen  */}
         <div className='hidden md:flex w-full items-center '>
@@ -72,16 +66,34 @@ console.log(userObj)
                 <MenuButton>
                   <motion.img
                     whileTap={{ scale: 1.3 }}
-                    src={user}
+                    src={userImg}
                     className='w-10 min-w-10 h-10 min-h-10 '
                     alt='user profile'
                   />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Add Item</MenuItem>
-                  <MenuItem>
-                    <div id='SignInDiv'></div>
-                  </MenuItem>
+                  {authentication == true && user.admin && (
+                    <MenuItem>
+                      <div className='flex items-center justify-between gap-2'>
+                        <div>Add Item</div>
+                        <AiOutlinePlus />
+                      </div>
+                    </MenuItem>
+                  )}
+                  {authentication == true && user.email && (
+                    <MenuItem onClick={Logout}>
+                      <div className='flex items-center justify-between gap-2'>
+                        <div>Logout</div>
+                        <AiOutlineLogout />
+                      </div>
+                    </MenuItem>
+                  )}
+
+                  {authentication == false && (
+                    <MenuItem>
+                      <div id={`${!small && 'SignInDiv'}`}>Login</div>
+                    </MenuItem>
+                  )}
                 </MenuList>
               </Menu>
             </div>
@@ -105,7 +117,7 @@ console.log(userObj)
               <MenuButton>
                 <motion.img
                   whileTap={{ scale: 1.1 }}
-                  src={user}
+                  src={userImg}
                   className='w-10 min-w-10 h-10 min-h-10 '
                   alt='user profile'
                 />
@@ -116,9 +128,8 @@ console.log(userObj)
                 <MenuItem>Menu</MenuItem>
                 <MenuItem>About Us</MenuItem>
                 <MenuItem>Service</MenuItem>
-
                 <MenuItem>
-                  <div id='SignInDiv'></div>
+                  <div id={`${small && 'SignInDiv'}`}></div>
                 </MenuItem>
               </MenuList>
             </Menu>
