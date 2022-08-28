@@ -1,8 +1,18 @@
 import React from 'react'
+import { useEffect } from 'react'
 import BikeDelivery from '../../assets/bikedelivery.jpg'
+import { GetCatogery } from '../../collections/product'
 import iceCream from '../../assets/icecream.png'
 import { Details } from '../../datas'
+import { useContext } from 'react'
+import GlobalContext from '../../context/globalcontext'
 function Home () {
+  // const { AllCatogery } = useContext(GlobalContext)
+  // useEffect(() => {
+  //   console.log("home Load");
+  //   GetCatogery(AllCatogery)
+  // }, [])
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
       <div className='flex w-full flex-col gap-4'>

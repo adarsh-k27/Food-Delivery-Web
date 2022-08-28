@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { MdFoodBank } from 'react-icons/md'
 import { BsFillCloudArrowUpFill } from 'react-icons/bs'
 import { AiFillDollarCircle } from 'react-icons/ai'
@@ -11,29 +11,79 @@ import food from '../../assets/chicken.png'
 import { UserSignIn } from '../../collections/user'
 import { useContext } from 'react'
 import GlobalContext from '../../context/globalcontext'
+import { AddProduct, GetCatogery } from '../../collections/product'
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
 function CreateContainer () {
+  const { user, catogery } = useContext(GlobalContext).state
+  console.log('cat', catogery)
   const [Title, setTitle] = useState('')
-  const Navigate=useNavigate()
+  const Navigate = useNavigate()
   const [Catogery, setCatogery] = useState('')
   const [Calory, setCalory] = useState('')
   const [Price, setPrice] = useState('')
-  const [imageAsset, setimageAsset] = useState(true)
-  const [msg, setMsg] = useState('success')
-  const [found, setFound] = useState('sm')
+  const [image, setImage] = useState(null)
+  const [imageAsset, setimageAsset] = useState(false)
+  const [msg, setMsg] = useState('')
+  const [found, setFound] = useState('')
   const [field, setField] = useState(false)
   const [Load, setLoad] = useState(false)
-  const {user}=useContext(GlobalContext).state
   const imageUpload = useRef()
-  const UploadImage = () => {
+  let url
+  const UploadImage = async Data => {
     //cloudify Upload
-
+    setLoad(true)
+    const form = new FormData()
+    form.append('file', image)
+    form.append('upload_preset', 'foody-app')
+    const { data } = await axios.post(
+      'https://api.cloudinary.com/v1_1/doxpbnjnk/image/upload',
+      form
+    )
+    if (data) {
+      url = data.url
+      AddProduct({ ...Data, img: url }, setLoad)
+      setimageAsset(url)
+      setTitle('')
+      setCalory('')
+      setCatogery('')
+      setPrice('')
+      url = undefined
+      //setLoad(false)
+    } else {
+      return toast.error('something wrong', {
+        theme: 'dark'
+      })
+    }
   }
+  const handleSave = () => {
+    const Data = {
+      name: Title,
+      price: Price,
+      calory: Calory,
+      catogery: Catogery
+    }
+    if (Title == '' || Price == '' || Calory == '' || Catogery == '') {
+      return toast.error('All fields Are Required', {
+        theme: 'dark'
+      })
+    }
+    UploadImage(Data)
+  }
+  const handleImage = e => {
+    setImage(e.target.files[0])
+  }
+  const { AllCatogery } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log('home Load')
+    GetCatogery(AllCatogery)
+  }, [])
 
-  useEffect(()=>{
-    if(!user.admin){
+  useEffect(() => {
+    if (!user.admin) {
       Navigate('/')
     }
-  },[user])
+  }, [user])
 
   return (
     <div className='flex justify-center items-center px-3 md:px-20 bg-gray-200'>
@@ -55,7 +105,7 @@ function CreateContainer () {
             type='text'
             placeholder='Enter Title Here..'
             className='w-full py-3 outline-none border-none text-bold font-serif '
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={e => setTitle(e.target.value)}
             value={Title}
           />
         </div>
@@ -67,11 +117,11 @@ function CreateContainer () {
             onChange={e => setCatogery(e.target.value)}
           >
             <option className='font-serif font-bold'>select Catogery</option>
-            {Catogeries &&
-              Catogeries.map(item => {
+            {catogery &&
+              catogery.map(item => {
                 return (
                   <option
-                    value={item.id}
+                    value={item._id}
                     className='font-serif font-bold capitalize outline-none'
                   >
                     {item.name}
@@ -102,14 +152,17 @@ function CreateContainer () {
                     <input
                       type={'file'}
                       accept='image/*'
-                      onChange={UploadImage}
+                      onChange={handleImage}
                       className='w-0 h-0'
                       ref={imageUpload}
                     ></input>
                   </label>
                 </>
               ) : (
-                <img src={food} className='w-full h-full object-cover '></img>
+                <img
+                  src={imageAsset}
+                  className='w-full h-full object-cover '
+                ></img>
               )}
             </>
           )}
@@ -121,7 +174,7 @@ function CreateContainer () {
               type={'text'}
               placeholder='Calories'
               className='w-full py-3 outline-none border-none text-bold font-serif'
-              onChange={(e)=>setCalory(e.target.value)}
+              onChange={e => setCalory(e.target.value)}
               value={Calory}
             ></input>
           </div>
@@ -132,15 +185,19 @@ function CreateContainer () {
               type={'text'}
               placeholder='Price'
               className='w-full py-3 outline-none border-none text-bold font-serif'
-              onChange={(e)=>setPrice(e.target.value)}
+              onChange={e => setPrice(e.target.value)}
               value={Price}
             ></input>
           </div>
         </div>
-        <div className='w-full md:w-max md:px-5 md:mt-2  flex items-center justify-center  bg-green-500 py-2 rounded-md'>
+        <div
+          className='w-full md:w-max md:px-5 md:mt-2  flex items-center justify-center  bg-green-500 py-2 rounded-md'
+          onClick={handleSave}
+        >
           <button className='font-serif'>Save</button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

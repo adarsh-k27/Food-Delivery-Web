@@ -5,7 +5,7 @@ function RouterWrapper() {
   return (
     <BrowserRouter>
     <Routes>
-        <Route path='/' element={ <CreateCatogery/> }>
+        <Route path='/' element={ <CreateContainer/> }>
         </Route>
     </Routes>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import axios from '../axios'
+import axios from '../axs'
 
 export const UserSignIn = async (data, loginContext, LoadState) => {
     try {

@@ -19,5 +19,11 @@ export const GlobalReducer = (state, action) => {
                 user: {}
             }
         }
+        case "GETCATOGERY":{
+            return {
+                ...state,
+                catogery:action.payload
+            }
+        }
     }
 }
