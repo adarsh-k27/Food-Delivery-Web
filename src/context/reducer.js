@@ -25,5 +25,12 @@ export const GlobalReducer = (state, action) => {
                 catogery:action.payload
             }
         }
+        case "ALLProducts":{
+            return {
+                ...state,
+                products:action.payload
+            }
+        }
+        default:return{}
     }
 }

@@ -53,3 +53,18 @@ export const AddProduct = async (data, Load) => {
         })
     }
 }
+
+export const GetAllProducts = async (ContextState) => {
+    try {
+        console.log("im here");
+        const res = await axios.get('/api/product')
+        console.log(res.data);
+        if (res.status == 200) {
+            console.log(res.data.products);
+            ContextState(res.data.products)
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -5,7 +5,8 @@ import { LOGINSUCCESS } from "../action";
 const initialData={
     authentication:false,
     user:{},
-    catogery:[]
+    catogery:[],
+    products:[],
 }
 
 
@@ -23,13 +24,17 @@ function GlobalcontextProvider({children}) {
     const AllCatogery=(data)=>{
       dispatch({type:"GETCATOGERY",payload:data})
     }
+    const AllProducts=(data)=>{
+      dispatch({type:"ALLProducts",payload:data})
+    }
   return (
     <GlobalContext.Provider value = {
       {
         state,
         UserLogin,
         userLogOut,
-        AllCatogery
+        AllCatogery,
+        AllProducts
       }
     } >
      {children}
