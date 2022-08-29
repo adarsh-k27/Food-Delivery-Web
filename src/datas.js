@@ -20,12 +20,6 @@ export const Details = [{
         desc: "Vanila & Choclate",
         img: chicken,
     },
-    {
-        id: 4,
-        name: "Burger Sandwitch",
-        desc: "Fresh Western Burger",
-        img: western,
-    }
 
 
 ]

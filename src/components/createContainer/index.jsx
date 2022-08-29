@@ -69,6 +69,11 @@ function CreateContainer () {
       })
     }
     UploadImage(Data)
+    if (imageAsset) {
+      setTimeout(() => {
+        setimageAsset(false)
+      }, [2000])
+    }
   }
   const handleImage = e => {
     setImage(e.target.files[0])
@@ -115,6 +120,7 @@ function CreateContainer () {
             id=''
             className='w-full outline-none border-none py-3 '
             onChange={e => setCatogery(e.target.value)}
+            value={Catogery}
           >
             <option className='font-serif font-bold'>select Catogery</option>
             {catogery &&
@@ -191,7 +197,7 @@ function CreateContainer () {
           </div>
         </div>
         <div
-          className='w-full md:w-max md:px-5 md:mt-2  flex items-center justify-center  bg-green-500 py-2 rounded-md'
+          className='w-full md:w-max md:px-5 md:mt-2  flex items-center justify-center  bg-green-500 py-2 rounded-md hover:bg-green-400'
           onClick={handleSave}
         >
           <button className='font-serif'>Save</button>

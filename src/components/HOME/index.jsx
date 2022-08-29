@@ -48,10 +48,10 @@ function Home () {
         </button>
       </div>
 
-      <div className=' w-full h-full flex-1 flex items-center'>
+      <div className=' w-full h-full flex-1 flex md:items-center'>
         {/* image section */}
-        <div className='relative w-full md:w-340 h-480 ml-auto bg-gradient-to-bl from-orange-100 to-orange-200'>
-          <div className='absolute top-20 w-full lg:-ml-10 py-5 flex flex-wrap gap-6 justify-center '>
+        <div className='relative w-full md:w-340 h-510 ml-auto bg-gradient-to-bl from-orange-100 to-orange-200'>
+          <div className='absolute top-20 w-full lg:-ml-10 py-2 md:py-5 flex flex-wrap gap-12 md:gap-6 justify-center '>
             {Details.map(data => {
               return (
                 <div
