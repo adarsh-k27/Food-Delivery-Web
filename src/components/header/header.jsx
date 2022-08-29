@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Logo from '../../assets/food-delivery-logo.jpg'
+import { CartContainer } from '../../components'
 import userImg from '../../assets/user.png'
 import { FaShoppingCart } from 'react-icons/fa'
 import { AiOutlineLogout, AiOutlinePlus } from 'react-icons/ai'
@@ -12,13 +13,12 @@ function Header () {
   const [open, setOpen] = useState(false)
   const [small, setSmall] = useState(false)
   const [Loading, setLoading] = useState(false)
+  const [openCart, setOpenCart] = useState(false)
   const { authentication, user } = useContext(GlobalContext).state
   const { UserLogin, userLogOut } = useContext(GlobalContext)
   const [UserDetails, setUserDetails] = useState(null)
 
   console.log('auth', authentication)
-  
-  
 
   const Logout = () => {
     localStorage.clear()
@@ -53,7 +53,12 @@ function Header () {
                 Services
               </li>
             </ul>
-            <div className='flex'>
+            <div
+              className='flex'
+              onClick={() => {
+                setOpenCart(true)
+              }}
+            >
               <FaShoppingCart className='text-xl' />
             </div>
             <div
@@ -136,6 +141,7 @@ function Header () {
           </div>
         </div>
       </header>
+      <CartContainer isOpen={openCart} onClose={setOpenCart} />
     </div>
   )
 }

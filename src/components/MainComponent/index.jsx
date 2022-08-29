@@ -1,8 +1,9 @@
 import React,{useEffect} from 'react'
-import { Home,FruitSection } from '../../components'
+import { Home,FruitSection,MenuSection } from '../../components'
 import {useContext} from 'react'
 import GlobalContext from '../../context/globalcontext'
 import { GetAllProducts } from '../../collections/product'
+
 function MainComponent () {
   const {AllProducts}=useContext(GlobalContext)
   useEffect(()=>{
@@ -12,6 +13,7 @@ function MainComponent () {
     <div className='flex flex-col gap-5'>
       <Home />
       <FruitSection />
+      <MenuSection />
     </div>
   )
 }

@@ -7,11 +7,11 @@ import { Details } from '../../datas'
 import { useContext } from 'react'
 import GlobalContext from '../../context/globalcontext'
 function Home () {
-  // const { AllCatogery } = useContext(GlobalContext)
-  // useEffect(() => {
-  //   console.log("home Load");
-  //   GetCatogery(AllCatogery)
-  // }, [])
+  const { AllCatogery } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log("home Load");
+    GetCatogery(AllCatogery)
+  }, [])
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
