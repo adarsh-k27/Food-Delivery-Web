@@ -2,17 +2,26 @@ import React, { useEffect, useRef } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import NotFound from '../../assets/computer.png'
+import { useContext } from 'react'
+import GlobalContext from '../../context/globalcontext'
+import { AddCartProduct } from '../../collections/product'
 function RowContainer ({ flag, data, scrollDir }) {
   //console.log("datas",data);
   const Scroll = useRef()
   const ScrollLeft = () => {
     Scroll.current.scrollLeft += scrollDir
   }
+  const { AddCart,state } = useContext(GlobalContext)
   useEffect(() => {
     if (scrollDir !== 0) {
       ScrollLeft()
     }
   }, [scrollDir])
+
+  const AddToCart=(id)=>{
+    AddCartProduct(state.user._id,id,AddCart)
+  }
+
   return (
     <div
       ref={Scroll}
@@ -23,7 +32,7 @@ function RowContainer ({ flag, data, scrollDir }) {
       {data && data.length > 0 ? (
         data.map(fruit => (
           <div className='w-full  md:w-300 h-52 min-w-300 md:min-w-300  bg-gray-200 px-2 rounded-md my-12 backdrop-blur-lg hover:drop-shadow-lg'>
-            <motion.div
+            <div
               whileTap={{ scale: 0.65 }}
               className='flex justify-between  items-center '
             >
@@ -35,12 +44,13 @@ function RowContainer ({ flag, data, scrollDir }) {
               />
               <motion.div
                 whileTap={{ scale: 0.65 }}
+                onClick={()=>AddToCart(fruit._id)}
                 className='bg-pink-600 hover:bg-pink-400 rounded-full px-2 py-2 z-50
             '
               >
                 <AiOutlineShoppingCart className='text-white text-lg' />
               </motion.div>
-            </motion.div>
+            </div>
             <div className='w-full flex flex-col gap-1 items-end'>
               <p className='text-base text-headingColor font-semibold font-serif text-md md:text-md'>
                 {fruit.name}

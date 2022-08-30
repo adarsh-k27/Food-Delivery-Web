@@ -1,17 +1,23 @@
 import React from 'react'
 import { useEffect } from 'react'
 import BikeDelivery from '../../assets/bikedelivery.jpg'
-import { GetCatogery } from '../../collections/product'
+import { GetAllCart, GetCatogery } from '../../collections/product'
 import iceCream from '../../assets/icecream.png'
 import { Details } from '../../datas'
 import { useContext } from 'react'
 import GlobalContext from '../../context/globalcontext'
 function Home () {
-  const { AllCatogery } = useContext(GlobalContext)
+  const { AllCatogery,state,LoadCart } = useContext(GlobalContext)
   useEffect(() => {
     console.log("home Load");
     GetCatogery(AllCatogery)
   }, [])
+
+  useEffect(()=>{
+     if(state.authentication== true && state.user  ){
+      GetAllCart(state?.user?._id,LoadCart)
+     }
+  },[state.user])
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>

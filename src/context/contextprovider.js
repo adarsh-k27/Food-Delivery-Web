@@ -7,6 +7,7 @@ const initialData={
     user:{},
     catogery:[],
     products:[],
+    cart:[]
 }
 
 
@@ -27,6 +28,12 @@ function GlobalcontextProvider({children}) {
     const AllProducts=(data)=>{
       dispatch({type:"ALLProducts",payload:data})
     }
+    const LoadCart=(data)=>{
+       dispatch({type:"LOAD_CART",payload:data})
+    }
+    const AddCart=(data)=>{
+      dispatch({type:"ADD_CART",payload:data})
+    }
   return (
     <GlobalContext.Provider value = {
       {
@@ -34,7 +41,9 @@ function GlobalcontextProvider({children}) {
         UserLogin,
         userLogOut,
         AllCatogery,
-        AllProducts
+        AllProducts,
+        LoadCart,
+        AddCart
       }
     } >
      {children}

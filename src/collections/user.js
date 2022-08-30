@@ -1,9 +1,9 @@
 import axios from '../axs'
 
-export const UserSignIn = async (data, loginContext, LoadState) => {
+export const UserSignIn = async (data, loginContext) => {
     try {
         console.log(data && "data comes here");
-        LoadState(true)
+        //LoadState(true)
         const res = await axios.post('/api/user/signin', data)
         console.log(res.data);
         if (res.status == 200) {
@@ -15,10 +15,10 @@ export const UserSignIn = async (data, loginContext, LoadState) => {
                 ...res.data.user,
                 token: res.data.token
             })
-            LoadState(false)
+            //LoadState(false)
         }
     } catch (error) {
-        LoadState(false)
+        //LoadState(false)
         console.log("error happen in Login Section");
         console.log(error);
     }

@@ -19,18 +19,32 @@ export const GlobalReducer = (state, action) => {
                 user: {}
             }
         }
-        case "GETCATOGERY":{
+        case "GETCATOGERY": {
             return {
                 ...state,
-                catogery:action.payload
+                catogery: action.payload
             }
         }
-        case "ALLProducts":{
+        case "ALLProducts": {
             return {
                 ...state,
-                products:action.payload
+                products: action.payload
             }
         }
-        default:return{}
+        case "LOAD_CART": {
+            return {
+                ...state,
+                cart: action.payload
+            }
+        }
+        case "ADD_CART": {
+            console.log("added to cart");
+            return {
+                ...state,
+                cart: [...action.payload]
+            }
+        }
+        default:
+            return {}
     }
 }

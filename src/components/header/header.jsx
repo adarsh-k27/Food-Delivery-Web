@@ -3,9 +3,18 @@ import Logo from '../../assets/food-delivery-logo.jpg'
 import { CartContainer } from '../../components'
 import userImg from '../../assets/user.png'
 import { FaShoppingCart } from 'react-icons/fa'
+import NotificationBadge from 'react-notification-badge'
+import { Effect } from 'react-notification-badge'
 import { AiOutlineLogout, AiOutlinePlus } from 'react-icons/ai'
 import { motion } from 'framer-motion'
-import { Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react'
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Spinner,
+  effect
+} from '@chakra-ui/react'
 import { UserSignIn } from '../../collections/user'
 import { UseGlobalContext } from '../../context/contextprovider'
 import GlobalContext from '../../context/globalcontext'
@@ -17,8 +26,9 @@ function Header () {
   const { authentication, user } = useContext(GlobalContext).state
   const { UserLogin, userLogOut } = useContext(GlobalContext)
   const [UserDetails, setUserDetails] = useState(null)
-
+  const {cart}=useContext(GlobalContext).state
   console.log('auth', authentication)
+  console.log('user', user)
 
   const Logout = () => {
     localStorage.clear()
@@ -59,6 +69,7 @@ function Header () {
                 setOpenCart(true)
               }}
             >
+              <NotificationBadge count={cart.length >0 && cart.length} effect={effect[1]} />
               <FaShoppingCart className='text-xl' />
             </div>
             <div

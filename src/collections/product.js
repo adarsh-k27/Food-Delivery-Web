@@ -63,7 +63,35 @@ export const GetAllProducts = async (ContextState) => {
             console.log(res.data.products);
             ContextState(res.data.products)
         }
-        
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const GetAllCart = async (id, CartContext) => {
+    try {
+        const res = await axios.get(`/api/cart/${id}`)
+        console.log(res.data);
+        if (res.status == 200) {
+            //localStorage.setItem('Cart', JSON.stringify(res.data.cart.cart))
+            CartContext(res.data.cart.cart)
+
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const AddCartProduct = async (user, product, CartContext) => {
+    try {
+        const res = await axios.post('/api/cart/add', {
+            user,
+            product
+        })
+        console.log(res.data);
+        if(res.status==200){
+            CartContext(res.data.cart.cart)
+        }
     } catch (error) {
         console.log(error);
     }

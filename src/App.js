@@ -30,8 +30,10 @@ function App() {
     state
   } = useContext(GlobalContext)
   useEffect(() => {
+    
     const user = JSON.parse(localStorage.getItem('User'))
-    if (state.authentication == true) {
+    console.log("parsed",user);
+    if (user && user.email ) {
       UserLogin(user)
     }
   }, [])
@@ -50,11 +52,10 @@ function App() {
       )
     }
   }, [window.google.accounts])
-  console.log("nnn", window);
 
   const GoogleLoginSuccess = response => {
     const userObj = jwt(response.credential)
-    //console.log(userObj);
+    //console.log("datass",userObj);
     const {
       name,
       email,
