@@ -69,7 +69,7 @@ function Header () {
                 setOpenCart(true)
               }}
             >
-              <NotificationBadge count={cart.length >0 && cart.length} effect={effect[1]} />
+              <NotificationBadge count={cart && cart.length >0 && cart.length} effect={effect[1]} />
               <FaShoppingCart className='text-xl' />
             </div>
             <div

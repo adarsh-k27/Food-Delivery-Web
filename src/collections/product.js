@@ -89,8 +89,23 @@ export const AddCartProduct = async (user, product, CartContext) => {
             product
         })
         console.log(res.data);
-        if(res.status==200){
+        if (res.status == 200) {
             CartContext(res.data.cart.cart)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const ChangeCartQty = async (data, index, ContextState) => {
+    try {
+        const res = await axios.put('/api/cart/change', data)
+        console.log(res.data);
+        if (res.status == 200) {
+            ContextState({
+                index,
+                qtychange: data.qtychange
+            })
         }
     } catch (error) {
         console.log(error);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { motion } from 'framer-motion'
-import NotFound from '../../assets/computer.png'
+import NotFound from '../../assets/notfound.png'
 import { useContext } from 'react'
 import GlobalContext from '../../context/globalcontext'
 import { AddCartProduct } from '../../collections/product'
@@ -70,8 +70,8 @@ function RowContainer ({ flag, data, scrollDir }) {
           </div>
         ))
       ) : (
-        <div className='w-full h-420 flex flex-col gap-4'>
-          <img src={NotFound} alt='' className='w-full h-full object-fit' />
+        <div className='w-full h-300 flex flex-col gap-4 items-center'>
+          <img src={NotFound} alt='' className='w-300 h-full object-fit' />
           <p className='text-red-400 font-bold text-xl font-serif'>
             Item Not Found{' '}
           </p>

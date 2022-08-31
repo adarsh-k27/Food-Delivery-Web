@@ -34,6 +34,12 @@ function GlobalcontextProvider({children}) {
     const AddCart=(data)=>{
       dispatch({type:"ADD_CART",payload:data})
     }
+    const ChangeQty=(data)=>{
+      dispatch({type:"CHANGE",payload:data})
+    }
+    const ClearCart=()=>{
+      dispatch({type:"CLEAR"})
+    }
   return (
     <GlobalContext.Provider value = {
       {
@@ -43,7 +49,9 @@ function GlobalcontextProvider({children}) {
         AllCatogery,
         AllProducts,
         LoadCart,
-        AddCart
+        AddCart,
+        ChangeQty,
+        ClearCart
       }
     } >
      {children}

@@ -44,6 +44,25 @@ export const GlobalReducer = (state, action) => {
                 cart: [...action.payload]
             }
         }
+
+        case "CHANGE": {
+            console.log("contextData", action.payload);
+            return {
+                ...state,
+                cart: [...state.cart.map((item, index) => {
+                    if (index == action.payload.index) {
+                        item.quantity = action.payload.qtychange == 1 ? item.quantity +.5 : item.quantity - .5
+                    }
+                    return item
+                })]
+            }
+        }
+        case 'CLEAR':{
+            return{
+                ...state,
+                cart:[]
+            }
+        }
         default:
             return {}
     }
