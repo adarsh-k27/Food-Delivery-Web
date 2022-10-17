@@ -1,5 +1,5 @@
 import axios from 'axios'
 const Instance=axios.create({
-    baseURL:"http://localhost:5000"
+    baseURL: "https://food-delivery-web-app.herokuapp.com/"
 })
 export default Instance;
