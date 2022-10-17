@@ -3,9 +3,6 @@ import React, {
   useEffect
 } from "react";
 import {
-  Header
-} from './components/index'
-import {
   AnimatePresence
 } from 'framer-motion'
 import {
@@ -14,14 +11,17 @@ import {
 } from 'react-router-dom'
 import {
   MainContainer,
-  CreateContainer
+  CreateContainer,
+  CreateCatogery,
+  Footer
 } from './components'
 import jwt from 'jwt-decode'
-import RouterWrapper from "./Router";
 import GlobalContext from "./context/globalcontext";
 import {
   UserSignIn
 } from "./collections/user";
+import NavBarHead from "./navbarnew";
+import MainComponent from "./components/MainComponent";
 //clientId : 1058444032298-86q2075ef5r30o1f5mta4vralfad3rvi.apps.googleusercontent.com
 //clientscecret : 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
 function App() {
@@ -74,10 +74,16 @@ function App() {
   return ( 
      <AnimatePresence>
     <div className = "w-screen h-auto flex flex-col ">
-    <Header/>
-    <main className = "mt-20 w-full px-2 md:px-12" >
-    <RouterWrapper/>
-    </main> 
+    {/* <Header/> */}
+    <NavBarHead />
+    <main className = "mt-20 w-full sm:px-2 md:px-12" >
+      <Routes>
+        <Route path="/add" element={<CreateContainer/>} ></Route>
+        <Route path="/add-catogery" element={<CreateCatogery/>} ></Route>
+        <Route path="/" element={<MainContainer/>}></Route>
+      </Routes>
+    </main>
+    < Footer />
     </div> 
     </AnimatePresence>
   );

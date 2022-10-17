@@ -16,7 +16,8 @@ export const GlobalReducer = (state, action) => {
             return {
                 ...state,
                 authentication: false,
-                user: {}
+                user: {},
+                cart:[]
             }
         }
         case "GETCATOGERY": {

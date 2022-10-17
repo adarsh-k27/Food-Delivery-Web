@@ -20,7 +20,7 @@ function Home () {
   },[state.user])
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+    <section className='grid grid-cols-1 md:grid-cols-2 gap-5' id='Home'>
       <div className='flex w-full flex-col gap-4'>
         {/* text sec6tion */}
         <div className='flex w-fit gap-3 items-center justify-start bg-orange-100 rounded-sm'>
@@ -78,7 +78,7 @@ function Home () {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

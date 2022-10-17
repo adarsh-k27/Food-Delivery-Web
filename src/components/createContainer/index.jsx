@@ -85,7 +85,7 @@ function CreateContainer () {
   }, [])
 
   useEffect(() => {
-    if (!user.admin) {
+    if (user.admin== false) {
       Navigate('/')
     }
   }, [user])

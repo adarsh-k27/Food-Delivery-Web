@@ -11,27 +11,29 @@ function RowContainer ({ flag, data, scrollDir }) {
   const ScrollLeft = () => {
     Scroll.current.scrollLeft += scrollDir
   }
-  const { AddCart,state } = useContext(GlobalContext)
+  const { AddCart, state } = useContext(GlobalContext)
   useEffect(() => {
     if (scrollDir !== 0) {
       ScrollLeft()
     }
   }, [scrollDir])
 
-  const AddToCart=(id)=>{
-    AddCartProduct(state.user._id,id,AddCart)
+  const AddToCart = id => {
+    AddCartProduct(state.user._id, id, AddCart)
   }
 
   return (
     <div
       ref={Scroll}
       className={`w-full bg-orange-50 flex items-center scroll-smooth  gap-2 ${
-        flag ? 'overflow-x-scroll' : 'overflow-x-auto flex-wrap justify-center'
+        flag
+          ? 'overflow-x-scroll'
+          : 'overflow-x-auto flex-wrap justify-center items-center'
       } px-2 md:px-5 `}
     >
       {data && data.length > 0 ? (
         data.map(fruit => (
-          <div className='w-full  md:w-300 h-52 min-w-300 md:min-w-300  bg-gray-200 px-2 rounded-md my-12 backdrop-blur-lg hover:drop-shadow-lg'>
+          <div className='w-full  md:w-300 h-52 min-w-300 md:min-w-300  bg-gray-200 px-2 rounded-md my-4 backdrop-blur-lg hover:drop-shadow-lg'>
             <div
               whileTap={{ scale: 0.65 }}
               className='flex justify-between  items-center '
@@ -40,11 +42,11 @@ function RowContainer ({ flag, data, scrollDir }) {
                 whileHover={{ scale: 1.2 }}
                 src={fruit.img}
                 alt=''
-                className='w-40  -mt-8 h-35 object-cover z-50'
+                className='w-40  -mt-8 h-36 object-cover z-50'
               />
               <motion.div
                 whileTap={{ scale: 0.65 }}
-                onClick={()=>AddToCart(fruit._id)}
+                onClick={() => AddToCart(fruit._id)}
                 className='bg-pink-600 hover:bg-pink-400 rounded-full px-2 py-2 z-50
             '
               >

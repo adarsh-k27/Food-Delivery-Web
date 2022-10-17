@@ -15,7 +15,7 @@ function MenuSection () {
   },[catogery])
   
   return (
-    <div className='w-full my-6 '>
+    <section className='w-full my-6 transition-all duration-100 ease-in-out scroll-smooth' id="Menu">
       <div
        className='flex flex-col gap-3 justify-center items-center py-1'>
         <p className='w-max text-headingColor text-lg relative font-sans font-bold before:absolute before:rounded-lg  before:bottom-0  before:w-20 before:left-5  before:h-1 before:bg-orange-400 py-1'>
@@ -43,7 +43,7 @@ function MenuSection () {
       <div className='w-full'>
         <RowContainer flag={false} data={activeState && products.filter((item)=>item.catogery._id == activeState)} />
       </div>
-    </div>
+    </section>
   )
 }
 
