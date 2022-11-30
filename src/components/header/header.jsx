@@ -1,40 +1,41 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Logo from '../../assets/food-delivery-logo.jpg'
-import { CartContainer } from '../../components'
-import userImg from '../../assets/user.png'
-import { FaShoppingCart } from 'react-icons/fa'
-import NotificationBadge from 'react-notification-badge'
-import { Effect } from 'react-notification-badge'
-import { AiOutlineLogout, AiOutlinePlus } from 'react-icons/ai'
-import { motion } from 'framer-motion'
+import React, { useContext, useEffect, useState } from "react";
+import Logo from "../../assets/food-delivery-logo.jpg";
+import { CartContainer } from "../../components";
+import userImg from "../../assets/user.png";
+import { FaShoppingCart } from "react-icons/fa";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+import { AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
+import { motion } from "framer-motion";
+import {FcGoogle} from 'react-icons/fc'
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   Spinner,
-  effect
-} from '@chakra-ui/react'
-import { UserSignIn } from '../../collections/user'
-import { UseGlobalContext } from '../../context/contextprovider'
-import GlobalContext from '../../context/globalcontext'
-function Header () {
-  const [open, setOpen] = useState(false)
-  const [small, setSmall] = useState(false)
-  const [Loading, setLoading] = useState(false)
-  const [openCart, setOpenCart] = useState(false)
-  const { authentication, user } = useContext(GlobalContext).state
-  const { UserLogin, userLogOut } = useContext(GlobalContext)
-  const [UserDetails, setUserDetails] = useState(null)
-  const {cart}=useContext(GlobalContext).state
-  console.log('auth', authentication)
-  console.log('user', user)
+  effect,
+} from "@chakra-ui/react";
+import { UserSignIn } from "../../collections/user";
+import { UseGlobalContext } from "../../context/contextprovider";
+import GlobalContext from "../../context/globalcontext";
+function Header() {
+  const [open, setOpen] = useState(false);
+  const [small, setSmall] = useState(false);
+  const [Loading, setLoading] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
+  const { authentication, user } = useContext(GlobalContext).state;
+  const { UserLogin, userLogOut } = useContext(GlobalContext);
+  const [UserDetails, setUserDetails] = useState(null);
+  const { cart } = useContext(GlobalContext).state;
+  console.log("auth", authentication);
+  console.log("user", user);
 
   const Logout = () => {
-    localStorage.clear()
-    userLogOut()
-    window.location.reload()
-  }
+    localStorage.clear();
+    userLogOut();
+    window.location.reload();
+  };
   return (
     <div>
       <header className='fixed w-screen z-50 p-3 px-1  md:px-12 md:p-2 bg-header'>
@@ -66,16 +67,19 @@ function Header () {
             <div
               className='flex'
               onClick={() => {
-                setOpenCart(true)
+                setOpenCart(true);
               }}
             >
-              <NotificationBadge count={cart && cart.length >0 && cart.length} effect={effect[1]} />
+              <NotificationBadge
+                count={cart && cart.length > 0 && cart.length}
+                effect={effect[1]}
+              />
               <FaShoppingCart className='text-xl' />
             </div>
             <div
               className=''
               onClick={() => {
-                setOpen(true)
+                setOpen(true);
               }}
             >
               <Menu>
@@ -107,7 +111,18 @@ function Header () {
 
                   {authentication == false && (
                     <MenuItem>
-                      <div id={`${!small && 'SignInDiv'}`}>Login</div>
+                      <div
+                        className='w-full cursor-pointer h-10 flex gap-4 items-center justify-center bg-black/20 rounded-md'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          //LoginWithGoogle();
+                        }}
+                      >
+                        <FcGoogle className='text-lg' />
+                        <button className='text-md font-bold'>
+                          Google SignIn
+                        </button>
+                      </div>
                     </MenuItem>
                   )}
                 </MenuList>
@@ -126,7 +141,7 @@ function Header () {
           <div
             className=''
             onClick={() => {
-              setOpen(true)
+              setOpen(true);
             }}
           >
             <Menu>
@@ -145,7 +160,18 @@ function Header () {
                 <MenuItem>About Us</MenuItem>
                 <MenuItem>Service</MenuItem>
                 <MenuItem>
-                  <div id={`${small && 'SignInDiv'}`}></div>
+                  <div
+                    className='w-full cursor-pointer h-10 flex gap-4 items-center justify-center bg-black/20 rounded-md'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      //LoginWithGoogle();
+                    }}
+                  >
+                    <FcGoogle className='text-lg' />
+                    <button className='text-md font-bold text-black/60'>
+                      Google SignIn
+                    </button>
+                  </div>
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -154,7 +180,7 @@ function Header () {
       </header>
       <CartContainer isOpen={openCart} onClose={setOpenCart} />
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;

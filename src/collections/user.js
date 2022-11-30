@@ -5,7 +5,7 @@ export const UserSignIn = async (data, loginContext) => {
         console.log(data && "data comes here");
         //LoadState(true)
         const res = await axios.post('/api/user/signin', data)
-        console.log(res.data);
+        //console.log("signin response",res.data);
         if (res.status == 200) {
             localStorage.setItem('User', JSON.stringify({
                 ...res.data.user,

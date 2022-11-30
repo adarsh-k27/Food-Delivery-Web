@@ -9,7 +9,10 @@ import { motion } from 'framer-motion'
 import { Menu, MenuButton, MenuList, MenuItem, effect } from '@chakra-ui/react'
 import GlobalContext from '../context/globalcontext'
 import { Link } from 'react-router-dom'
-
+import { FcGoogle } from 'react-icons/fc'
+import { UserSignIn } from '../collections/user'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { app } from "../firabse.config";
 // function NavBarHead () {
 //   return (
 //     <>
@@ -63,13 +66,45 @@ function NavBarHead () {
   const [open, setOpen] = useState(false)
   const [small, setSmall] = useState(false)
   const [Loading, setLoading] = useState(false)
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
   const [openCart, setOpenCart] = useState(false)
   const { authentication, user } = useContext(GlobalContext).state
   const { UserLogin, userLogOut } = useContext(GlobalContext)
   const [UserDetails, setUserDetails] = useState(null)
   const { cart } = useContext(GlobalContext).state
-  console.log('auth', authentication)
-  console.log('user', user)
+  //const { UserLogin, state } = useContext(GlobalContext);
+  // console.log('auth', authentication)
+  // console.log('user', user)
+ 
+const LoginWithGoogle = async () => {
+  await signInWithPopup(firebaseAuth, provider).then((usercred) => {
+    //console.log('cred', usercred)
+    const data = {
+      name: usercred.user.displayName,
+      email: usercred.user.email,
+      picture: usercred.user.photoURL,
+      email_verified: usercred.user.emailVerified,
+    };
+    //console.log(data);
+    UserSignIn(data,UserLogin)
+
+    firebaseAuth.onAuthStateChanged((userCred) => {
+      if (userCred) {
+       // console.log("updated", userCred);
+        userCred.getIdToken().then((token) => {
+          // LoginUser(`Bearer ${token}`, UserLogin)
+        });
+        //Navigate("/", { replace: true });
+      } else {
+        // setAuth(false)
+        // UserLogin(null)
+        // Navigate('/login')
+      }
+    });
+  });
+};
+
 
   const Logout = () => {
     localStorage.clear()
@@ -103,7 +138,7 @@ function NavBarHead () {
           className='navbar-nav  mt-2 mt-lg-0 flex  gap-8 md:ml-auto font-mono font-medium tracking-wide'
           initial={{ x: 300 }}
           animate={{ x: 0 }}
-          transition={{delay:.5}}
+          transition={{ delay: 0.5 }}
         >
           <li className='nav-item active'>
             <Link className='nav-link' to='/'>
@@ -125,7 +160,7 @@ function NavBarHead () {
             <div
               className=''
               onClick={() => {
-                setOpen(true)
+                setOpen(true);
               }}
             >
               <Menu>
@@ -142,7 +177,7 @@ function NavBarHead () {
                     <>
                       <MenuItem>
                         <Link
-                          to={'/add'}
+                          to={"/add"}
                           className='flex items-center justify-between gap-2'
                         >
                           <div>Add Item</div>
@@ -152,7 +187,7 @@ function NavBarHead () {
 
                       <MenuItem>
                         <Link
-                          to={'/add-catogery'}
+                          to={"/add-catogery"}
                           className='flex items-center justify-between gap-2'
                         >
                           <div>Add Catogery</div>
@@ -172,7 +207,18 @@ function NavBarHead () {
 
                   {authentication == false && (
                     <MenuItem>
-                      <div id={`${!small && 'SignInDiv'}`}>Login</div>
+                      <div
+                        className='w-full cursor-pointer h-10 flex gap-4 items-center justify-center bg-black/20 rounded-md'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          LoginWithGoogle();
+                        }}
+                      >
+                        <FcGoogle className='text-lg' />
+                        <button className='text-md font-bold text-black/60'>
+                          Google SignIn
+                        </button>
+                      </div>
                     </MenuItem>
                   )}
                 </MenuList>
@@ -185,7 +231,7 @@ function NavBarHead () {
         className='flex'
         whileTap={{ scale: 0.65 }}
         onClick={() => {
-          setOpenCart(true)
+          setOpenCart(true);
         }}
       >
         <NotificationBadge
@@ -197,7 +243,7 @@ function NavBarHead () {
 
       <CartContainer isOpen={openCart} onClose={setOpenCart} />
     </nav>
-  )
+  );
 }
 
 export default NavBarHead
